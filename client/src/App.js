@@ -1,3 +1,13 @@
 export default function App() {
-	return <h1>Hello World!</h1>;
+	return (
+		<section>
+			<h1>Chat App</h1>
+			<form onSubmit={(e) => e.preventDefault()}>
+				<label for='name'>Name:</label>{' '}
+				<input id='name' type='text' value='' placeholder='Enter user name' />
+				<label for='chatRoom'>Join a Chat Room</label>
+				<input id='chatRoom' type='submit' value='Join' />
+			</form>
+		</section>
+	);
 }
