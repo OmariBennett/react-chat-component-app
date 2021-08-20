@@ -11,10 +11,15 @@ export default function App() {
 		});
 
 		socket.on('connect', () => {
-			//console.log(socket.id); // x8WIv7-mJelg7on_ALbx
 			console.log(socket);
 		});
-	});
+
+		return () => {
+			socket.on('disconnect', () => {
+				console.log('disconnect for the client side...'); // undefined
+			});
+		};
+	}, []);
 
 	return (
 		<div>
