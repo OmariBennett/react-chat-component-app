@@ -1,0 +1,25 @@
+{
+  "name": "react-chat-component-app",
+  "version": "1.0.0",
+  "description": "React Chat Component App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OmariBennett/react-chat-component-app.git"
+  },
+  "keywords": [
+    "React",
+    "Node.js",
+    "Socket.io",
+    "Express.js"
+  ],
+  "author": "Omari Bennett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OmariBennett/react-chat-component-app/issues"
+  },
+  "homepage": "https://github.com/OmariBennett/react-chat-component-app#readme"
+}
