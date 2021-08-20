@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/OmariBennett/react-chat-component-app/issues"
   },
-  "homepage": "https://github.com/OmariBennett/react-chat-component-app#readme"
+  "homepage": "https://github.com/OmariBennett/react-chat-component-app#readme",
+  "dependencies": {
+    "nodemon": "^2.0.12"
+  }
 }
