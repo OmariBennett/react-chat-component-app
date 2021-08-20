@@ -1,4 +1,21 @@
+import React, { useEffect } from 'react';
+import io from 'socket.io-client';
+
+let socket;
+let ENDPOINT = 'localhost:5000';
+
 export default function App() {
+	useEffect(() => {
+		socket = io(ENDPOINT, {
+			transports: ['websocket', 'polling', 'flashsocket'],
+		});
+
+		socket.on('connect', () => {
+			//console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+			console.log(socket);
+		});
+	});
+
 	return (
 		<div>
 			{/* Login form component */}
