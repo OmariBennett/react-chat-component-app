@@ -1,31 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+import React, { useState } from 'react';
 import Chat from './components/chat/Chat';
-
-let socket;
-let ENDPOINT = 'localhost:5000';
-// let toogleComponents = false;
 
 export default function App() {
 	const [userName, setUserName] = useState('');
 	const [chatRoom, setChatRoom] = useState('');
 	let [toogleComponents, setToogleComponents] = useState(false);
-
-	useEffect(() => {
-		socket = io(ENDPOINT, {
-			transports: ['websocket', 'polling', 'flashsocket'],
-		});
-
-		socket.on('connect', () => {
-			// console.log(socket);
-		});
-
-		return () => {
-			socket.on('disconnect', () => {
-				console.log('disconnect for the client side...'); // undefined
-			});
-		};
-	}, []);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -48,9 +27,10 @@ export default function App() {
 					{/* Chat component */}
 					<header>
 						<h1>Header Component</h1>
+						<h2>{chatRoom} Chat Room</h2>
 						<input type='button' value='Close' onClick={handleCloseChat} />
 					</header>
-					<Chat />
+					<Chat userName={userName} />
 				</React.Fragment>
 			) : (
 				<React.Fragment>
