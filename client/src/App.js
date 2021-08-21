@@ -1,17 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import Chat from './components/chat/Chat';
 
 let socket;
 let ENDPOINT = 'localhost:5000';
+// let toogleComponents = false;
 
 export default function App() {
+	const [userName, setUserName] = useState('');
+	const [chatRoom, setChatRoom] = useState('');
+	let [toogleComponents, setToogleComponents] = useState(false);
+
 	useEffect(() => {
 		socket = io(ENDPOINT, {
 			transports: ['websocket', 'polling', 'flashsocket'],
 		});
 
 		socket.on('connect', () => {
-			console.log(socket);
+			// console.log(socket);
 		});
 
 		return () => {
@@ -21,50 +27,63 @@ export default function App() {
 		};
 	}, []);
 
-	return (
-		<div>
-			{/* Login form component */}
-			<section>
-				<h1>Chat App</h1>
-				<form onSubmit={(e) => e.preventDefault()}>
-					<label for='name'>Name:</label>{' '}
-					<input id='name' type='text' placeholder='Enter user name' />
-					<label for='chatRoom'>Join a Chat Room</label>
-					<select id='chatRoom' name='room'>
-						<option value='' selected>
-							Please choose
-						</option>
-						<option value='javascript'>JavaScript</option>
-						<option value='css'>CSS</option>
-						<option value='react'>React</option>
-					</select>
-					<input type='submit' value='Join' />
-				</form>
-			</section>
-			{/* Login form component */}
-			<section>
-				<header>
-					<span>logo placeholder</span>
-					<h2>JavaScript room</h2>
-					<button>close button placeholder</button>
-				</header>
-				<main>
-					<ul>
-						<li>John: message item 1</li>
-						<li>Jane: message item 1</li>
-						<li>John: message item 2</li>
-						<li>Jane: message item 2</li>
-						<li>John: message item 3</li>
-						<li>Jane: message item 3</li>
-					</ul>
+	const handleSubmit = (e) => {
+		e.preventDefault();
 
-					<form onSubmit={(e) => e.preventDefault()}>
-						<label for='message'>Message:</label>
-						<input id='message' type='text' placeholder='Enter message' />
-						<input type='submit' value='Submit' />
+		if (userName !== '' && chatRoom !== '') {
+			toogleComponents = setToogleComponents(true);
+		}
+	};
+
+	const handleCloseChat = () => {
+		setToogleComponents(false);
+		setUserName('');
+		setChatRoom('');
+	};
+
+	return (
+		<section>
+			{toogleComponents ? (
+				<React.Fragment>
+					{/* Chat component */}
+					<header>
+						<h1>Header Component</h1>
+						<input type='button' value='Close' onClick={handleCloseChat} />
+					</header>
+					<Chat />
+				</React.Fragment>
+			) : (
+				<React.Fragment>
+					{/* Login form component */}
+					<h1>Chat App</h1>
+					<form onSubmit={handleSubmit}>
+						<label for='name'>Name:</label>{' '}
+						<input
+							id='name'
+							type='text'
+							value={userName}
+							placeholder='Enter user name'
+							onChange={(e) => setUserName(e.target.value)}
+						/>
+						<label>
+							Join a Chat Room
+							<select
+								id='chatRoom'
+								name='room'
+								value={chatRoom}
+								onChange={(e) => setChatRoom(e.target.value)}>
+								<option value='' selected>
+									Please choose
+								</option>
+								<option value='javascript'>JavaScript</option>
+								<option value='css'>CSS</option>
+								<option value='react'>React</option>
+							</select>
+						</label>
+						<input type='submit' value='Join' />
 					</form>
-				</main>
-			</section>
-		</div>
+				</React.Fragment>
+			)}
+		</section>
 	);
 }
